@@ -1,0 +1,29 @@
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+}
+
+subprojects {
+    apply plugin: 'java'
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+
+    tasks.withType(JavaCompile).configureEach {
+        options.encoding = 'UTF-8'
+    }
+}
+
+project(':core') {
+    dependencies {
+        implementation "com.badlogicgames.gdx:gdx:1.13.5"
+    }
+}
+
+project(':desktop') {
+    dependencies {
+        implementation project(':core')
+        implementation "com.badlogicgames.gdx:gdx-backend-lwjgl3:1.13.5"
+        implementation "com.badlogicgames.gdx:gdx-platform:1.13.5:natives-desktop"
+    }
+}
