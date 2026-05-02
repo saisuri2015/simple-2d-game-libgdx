@@ -30,8 +30,12 @@ public class DesktopLauncher {
     }
 
     private static boolean isStartedOnFirstThread() {
-        String javaStartedOnFirstThread = System.getenv("JAVA_STARTED_ON_FIRST_THREAD");
-        return "1".equals(javaStartedOnFirstThread);
+        for (String key : System.getenv().keySet()) {
+            if (key.equals("JAVA_STARTED_ON_FIRST_THREAD") || key.startsWith("JAVA_STARTED_ON_FIRST_THREAD_")) {
+                return "1".equals(System.getenv(key));
+            }
+        }
+        return false;
     }
 
     private static void relaunchOnFirstThread(String[] args) {
